@@ -4,10 +4,10 @@ import { Observable } from "rxjs/Rx";
 import "rxjs/add/operator/map";
 
 import { Config } from "../config";
-import { Grocery } from "./grocery";
+import { Todos } from "./todos";
 
 @Injectable()
-export class GroceryListService {
+export class TodosListService {
     constructor(private http: Http) {}
 
     load() {
@@ -19,11 +19,11 @@ export class GroceryListService {
         })
             .map(res => res.json())
             .map(data => {
-                let groceryList = [];
-                data.Result.forEach((grocery) => {
-                    groceryList.push(new Grocery(grocery.Id, grocery.Name));
+                let todosList = [];
+                data.Result.forEach((todos) => {
+                    todosList.push(new Todos(todos.Id, todos.Name));
                 });
-                return groceryList;
+                return todosList;
             })
             .catch(this.handleErrors);
     }
@@ -39,7 +39,7 @@ export class GroceryListService {
         )
             .map(res => res.json())
             .map(data => {
-                return new Grocery(data.Result.Id, name);
+                return new Todos(data.Result.Id, name);
             })
             .catch(this.handleErrors);
     }

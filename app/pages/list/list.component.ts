@@ -1,29 +1,29 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { TextField } from "ui/text-field";
-import { Grocery } from "../../shared/grocery/grocery";
-import { GroceryListService } from "../../shared/grocery/grocery-list.service";
+import { Todos } from "../../shared/todos/todos";
+import { TodosListService } from "../../shared/todos/todos-list.service";
 import * as SocialShare from "nativescript-social-share";
 
 @Component({
     selector: "list",
     templateUrl: "pages/list/list.html",
     styleUrls: ["pages/list/list-common.css", "pages/list/list.css"],
-    providers: [GroceryListService]
+    providers: [TodosListService]
 })
 export class ListComponent implements OnInit {
-    constructor(private groceryListService: GroceryListService) {}
-    groceryList: Array<Grocery> = [];
-    grocery = "";
+    constructor(private todosListService: TodosListService) {}
+    todosList: Array<Todos> = [];
+    todos = "";
     isLoading = false;
     listLoaded = false;
-    @ViewChild("groceryTextField") groceryTextField: ElementRef;
+    @ViewChild("todosTextField") todosTextField: ElementRef;
 
     ngOnInit() {
         this.isLoading = true;
-        this.groceryListService.load()
-            .subscribe(loadedGroceries => {
-                loadedGroceries.forEach((groceryObject) => {
-                    this.groceryList.unshift(groceryObject);
+        this.todosListService.load()
+            .subscribe(loadedTodos => {
+                loadedTodos.forEach((todosObject) => {
+                    this.todosList.unshift(todosObject);
                 });
                 this.isLoading = false;
                 this.listLoaded = true;
@@ -32,35 +32,35 @@ export class ListComponent implements OnInit {
 
     share() {
         let list = [];
-        for (let i = 0, size = this.groceryList.length; i < size ; i++) {
-            list.push(this.groceryList[i].name);
+        for (let i = 0, size = this.todosList.length; i < size ; i++) {
+            list.push(this.todosList[i].name);
         }
         let listString = list.join(", ").trim();
         SocialShare.shareText(listString);
     }
 
     add() {
-        if (this.grocery.trim() === "") {
-            alert("Enter a grocery item");
+        if (this.todos.trim() === "") {
+            alert("Enter a todo item");
             return;
         }
 
         // Dismiss the keyboard
-        let textField = <TextField>this.groceryTextField.nativeElement;
+        let textField = <TextField>this.todosTextField.nativeElement;
         textField.dismissSoftInput();
 
-        this.groceryListService.add(this.grocery)
+        this.todosListService.add(this.todos)
             .subscribe(
-                groceryObject => {
-                    this.groceryList.unshift(groceryObject);
-                    this.grocery = "";
+                todosObject => {
+                    this.todosList.unshift(todosObject);
+                    this.todos = "";
                 },
                 () => {
                     alert({
                         message: "An error occurred while adding an item to your list.",
                         okButtonText: "OK"
                     });
-                    this.grocery = "";
+                    this.todos = "";
                 }
             )
     }

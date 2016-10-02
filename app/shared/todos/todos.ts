@@ -1,3 +1,3 @@
-export class Grocery {
+export class Todos {
     constructor(public id: string, public name: string) {}
 }
