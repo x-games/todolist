@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { TextField } from "ui/text-field";
 import { Grocery } from "../../shared/grocery/grocery";
 import { GroceryListService } from "../../shared/grocery/grocery-list.service";
+import * as SocialShare from "nativescript-social-share";
 
 @Component({
     selector: "list",
@@ -27,6 +28,15 @@ export class ListComponent implements OnInit {
                 this.isLoading = false;
                 this.listLoaded = true;
             });
+    }
+
+    share() {
+        let list = [];
+        for (let i = 0, size = this.groceryList.length; i < size ; i++) {
+            list.push(this.groceryList[i].name);
+        }
+        let listString = list.join(", ").trim();
+        SocialShare.shareText(listString);
     }
 
     add() {
