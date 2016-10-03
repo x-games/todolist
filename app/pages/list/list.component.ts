@@ -64,4 +64,17 @@ export class ListComponent implements OnInit {
                 }
             )
     }
+    deleteTodos(todos: Todos) {
+        this.todosListService.delete(todos.id)
+            .subscribe(
+                () => {
+                    var index = this.todosList.indexOf(todos);
+                    this.todosList.splice(index, 1);
+                    alert({
+                        message: "An todo "+ todos.name +" successufilly deleted.",
+                        okButtonText: "OK"
+                    });
+                }
+            )
+    }
 }

@@ -13,6 +13,12 @@ ListView {
   background-color: #CB1D00;
   padding: 5 10;
 }
+.list-element {
+  background-color: #cbc967;
+}
+.delete-button {
+  margin-right: 5;
+}
 .add-bar Image {
   height: 15;
   vertical-align: center;

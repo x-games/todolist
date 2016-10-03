@@ -43,6 +43,21 @@ export class TodosListService {
             })
             .catch(this.handleErrors);
     }
+    delete(id: string) {
+        let headers = new Headers();
+        headers.append("Authorization", "Bearer " + Config.token);
+        headers.append("Content-Type", "application/json");
+
+        return this.http.delete(
+            Config.apiUrl + "Todos/" + id,
+            { headers: headers }
+        )
+            .map(res => {
+                console.log(res);
+                res.json();
+            })
+            .catch(this.handleErrors);
+    }
     handleErrors(error: Response) {
         console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
