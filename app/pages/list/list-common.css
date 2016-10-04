@@ -1,16 +1,16 @@
 ListView {
-  opacity: 0;
+  /*opacity: 0;*/
 }
 .visible {
-  animation-name: show;
-  animation-duration: 1s;
+  /*animation-name: show;*/
+  /*animation-duration: 1s;*/
 }
 @keyframes show {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 .add-bar {
-  background-color: #CB1D00;
+  background-color: #0055cb;
   padding: 5 10;
 }
 .list-element {
