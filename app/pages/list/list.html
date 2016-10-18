@@ -11,7 +11,7 @@
     <ListView [items]="todosList" row="1" class="small-spacing" [class.visible]="listLoaded">
         <template let-item="item">
             <GridLayout row="0" columns="*, auto" class="list-element">
-                <Label [text]="item.name" class="medium-spacing" col="0"></Label>
+                <Label [text]="item.name" class="medium-spacing" col="0" (tap)="detailsDisplay(item)"></Label>
                 <Image src="res://delete" class="delete-button" (tap)="deleteTodos(item)" col="1"></Image>
             </GridLayout>
         </template>

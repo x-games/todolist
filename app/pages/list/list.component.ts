@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
 import { TextField } from "ui/text-field";
 import { Todos } from "../../shared/todos/todos";
 import { TodosListService } from "../../shared/todos/todos-list.service";
@@ -11,7 +12,7 @@ import * as SocialShare from "nativescript-social-share";
     providers: [TodosListService]
 })
 export class ListComponent implements OnInit {
-    constructor(private todosListService: TodosListService) {}
+    constructor(private router: Router, private todosListService: TodosListService) {}
     todosList: Array<Todos> = [];
     todos = "";
     isLoading = false;
@@ -28,6 +29,11 @@ export class ListComponent implements OnInit {
                 this.isLoading = false;
                 this.listLoaded = true;
             });
+    }
+
+    detailsDisplay(todos: Todos) {
+        console.log(JSON.stringify(todos));
+        this.router.navigate(["/details"]);
     }
 
     share() {

@@ -21,6 +21,7 @@ export class TodosListService {
             .map(data => {
                 let todosList = [];
                 data.Result.forEach((todos) => {
+                    console.log(JSON.stringify(todos));
                     todosList.push(new Todos(todos.Id, todos.Name));
                 });
                 return todosList;
