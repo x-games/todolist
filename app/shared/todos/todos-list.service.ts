@@ -21,8 +21,7 @@ export class TodosListService {
             .map(data => {
                 let todosList = [];
                 data.Result.forEach((todos) => {
-                    console.log(JSON.stringify(todos));
-                    todosList.push(new Todos(todos.Id, todos.Name));
+                    todosList.push(new Todos(todos.Id, todos.Name, todos.Checked));
                 });
                 return todosList;
             })
@@ -40,7 +39,7 @@ export class TodosListService {
         )
             .map(res => res.json())
             .map(data => {
-                return new Todos(data.Result.Id, name);
+                return new Todos(data.Result.Id, name, false);
             })
             .catch(this.handleErrors);
     }
@@ -54,7 +53,24 @@ export class TodosListService {
             { headers: headers }
         )
             .map(res => {
-                console.log(res);
+                res.json();
+            })
+            .catch(this.handleErrors);
+    }
+    update(todos: Todos) {
+        let headers = new Headers();
+        todos.checked = !todos.checked;
+        let zxc = todos.checked;
+        headers.append("Authorization", "Bearer " + Config.token);
+        headers.append("Content-Type", "application/json");
+
+        return this.http.put(
+            Config.apiUrl + "Todos/" + todos.id,
+            JSON.stringify({ Checked: zxc }),
+            { headers: headers }
+        )
+            .map(res => {
+                console.log(JSON.stringify(res));
                 res.json();
             })
             .catch(this.handleErrors);

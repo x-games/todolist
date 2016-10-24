@@ -17,6 +17,7 @@ export class ListComponent implements OnInit {
     todos = "";
     isLoading = false;
     listLoaded = false;
+    isChecked = false;
     @ViewChild("todosTextField") todosTextField: ElementRef;
 
     ngOnInit() {
@@ -74,10 +75,26 @@ export class ListComponent implements OnInit {
         this.todosListService.delete(todos.id)
             .subscribe(
                 () => {
-                    var index = this.todosList.indexOf(todos);
+                    let index = this.todosList.indexOf(todos);
                     this.todosList.splice(index, 1);
                     alert({
-                        message: "An todo "+ todos.name +" successufilly deleted.",
+                        message: "A todo "+ todos.name +" successfully deleted.",
+                        okButtonText: "OK"
+                    });
+                }
+            )
+    }
+
+    checkTodos(todos: Todos) {
+        console.log(JSON.stringify(todos));
+        this.todosListService.update(todos)
+            .subscribe(
+                () => {
+                    let isChecked = todos.checked;
+                    let index = this.todosList.indexOf(todos);
+                    this.todosList[index].checked = !isChecked;
+                    alert({
+                        message: "A todo "+ todos.name +" successfully updated.",
                         okButtonText: "OK"
                     });
                 }

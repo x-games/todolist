@@ -10,9 +10,10 @@
 
     <ListView [items]="todosList" row="1" class="small-spacing" [class.visible]="listLoaded">
         <template let-item="item">
-            <GridLayout row="0" columns="*, auto" class="list-element">
-                <Label [text]="item.name" class="medium-spacing" col="0" (tap)="detailsDisplay(item)"></Label>
-                <Image src="res://delete" class="delete-button" (tap)="deleteTodos(item)" col="1"></Image>
+            <GridLayout row="0" columns="auto, *, auto" class="list-element">
+                <Image [src]="item.checked ? 'res://checked' : 'res://unchecked' " class="delete-button" (tap)="checkTodos(item)" col="0"></Image>
+                <Label [text]="item.name" class="medium-spacing" col="1" (tap)="detailsDisplay(item)"></Label>
+                <Image src="res://delete" class="delete-button" (tap)="deleteTodos(item)" col="2"></Image>
             </GridLayout>
         </template>
     </ListView>
